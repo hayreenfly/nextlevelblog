@@ -1,10 +1,15 @@
 import Header from '../components/Header';
+import Footer from '../components/Footer';
+import FormContainer from '../components/FormContainer';
 const Layout = ({ children }) => {
   return (
     <>
       <Header />
-      {children}
-      <p>Footer</p>
+      <main>
+        <FormContainer>{children}</FormContainer>
+      </main>
+
+      <Footer />
     </>
   );
 };

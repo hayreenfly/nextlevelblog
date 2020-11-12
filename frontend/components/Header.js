@@ -17,7 +17,7 @@ const Header = () => {
             <Nav className='ml-auto'>
               <Nav.Link>
                 <Link href='/signup' passHref>
-                  <Nav.Link>Signup</Nav.Link>
+                  <Nav.Link>Sign Up</Nav.Link>
                 </Link>
               </Nav.Link>
               <Nav.Link>
