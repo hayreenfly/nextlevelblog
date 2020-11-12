@@ -1,26 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import Message from '../Message';
+import { signup } from '../../actions/userActions';
 
 const SignupComponent = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [showForm, setShowForm] = useState(true);
+  const router = useRouter();
+
+  const [name, setName] = useState('New User');
+  const [email, setEmail] = useState('user@localhost.com');
+  const [password, setPassword] = useState('123456');
+  const [confirmPassword, setConfirmPassword] = useState('123456');
+  const [message, setMessage] = useState(null);
+
+  const dispatch = useDispatch();
+
+  const userSignup = useSelector((state) => state.userSignup);
+  const { loading, error, userInfo } = userSignup;
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log('handle submit');
+    if (password !== confirmPassword) {
+      setMessage('Passwords do not match');
+    } else {
+      dispatch(signup(name, email, password));
+    }
   };
+
   return (
     <Form className='mt-5' onSubmit={submitHandler}>
       <h2>Sign Up Page</h2>
-
-      <Form.Group className='mt-4' controlId='email'>
+      {message && <Message variant='danger'>{message}</Message>}
+      <Form.Group className='mt-4' controlId='name'>
         <Form.Label>Full Name</Form.Label>
         <Form.Control
-          type='email'
+          type='text'
           placeholder='Enter Full Name'
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -47,7 +62,7 @@ const SignupComponent = () => {
         ></Form.Control>
       </Form.Group>
 
-      <Form.Group controlId='password'>
+      <Form.Group controlId='comfirmPassword'>
         <Form.Label>Confirm Password</Form.Label>
         <Form.Control
           type='password'

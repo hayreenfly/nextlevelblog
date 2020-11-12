@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { APP_NAME } from '../config';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import Link from 'next/link';
+import { APP_NAME } from '../config';
 
 const Header = () => {
   return (
@@ -15,16 +15,16 @@ const Header = () => {
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ml-auto'>
-              <Nav.Link>
+              <Nav.Item>
                 <Link href='/signup' passHref>
                   <Nav.Link>Sign Up</Nav.Link>
                 </Link>
-              </Nav.Link>
-              <Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
                 <Link href='/signin' passHref>
                   <Nav.Link>Signin</Nav.Link>
                 </Link>
-              </Nav.Link>
+              </Nav.Item>
             </Nav>
           </Navbar.Collapse>
         </Container>

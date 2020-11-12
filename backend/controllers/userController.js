@@ -31,14 +31,14 @@ const signup = asyncHandler(async (req, res) => {
   });
 
   if (user) {
-    // res.status(201).json({
-    //   _id: user._id,
-    //   name: user.name,
-    //   email: user.email,
-    //   profile: user.profile,
-    //   username: user.username,
-    // });
-    res.json({ message: 'Signup success! Please signin.' });
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      profile: user.profile,
+      username: user.username,
+    });
+    // res.json({ message: 'Signup success! Please signin.' });
   } else {
     res.status(400);
     throw new Error('Invalid user data');

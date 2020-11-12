@@ -1,6 +1,5 @@
 import express from 'express';
 import morgan from 'morgan';
-import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -21,8 +20,9 @@ const PORT = process.env.PORT || 8000;
 
 // middlewares
 app.use(morgan('dev'));
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 
 // Connect routes
 app.use('/api/blogs', blogRoutes);
