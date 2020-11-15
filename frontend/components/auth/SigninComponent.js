@@ -10,6 +10,7 @@ const SigninComponent = () => {
 
   const [email, setEmail] = useState('user@localhost.com');
   const [password, setPassword] = useState('123456');
+  const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -30,6 +31,7 @@ const SigninComponent = () => {
   return (
     <Form className='mt-5' onSubmit={submitHandler}>
       <h2>Sign In Page</h2>
+      {message && <Message variant='danger'>{message}</Message>}
       {error && <Message variant='danger'>{error}</Message>}
 
       <Form.Group className='mt-4' controlId='email'>
@@ -53,7 +55,7 @@ const SigninComponent = () => {
       </Form.Group>
 
       <Button type='submit' variant='primary'>
-        Sign In
+        Sign Up
       </Button>
     </Form>
   );
