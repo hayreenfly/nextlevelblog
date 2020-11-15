@@ -3,21 +3,18 @@ import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Message from '../Message';
-import { signup } from '../../actions/userActions';
+import { signin } from '../../actions/userActions';
 
-const SignupComponent = () => {
+const SigninComponent = () => {
   const router = useRouter();
 
-  const [name, setName] = useState('New User');
   const [email, setEmail] = useState('user@localhost.com');
   const [password, setPassword] = useState('123456');
-  const [confirmPassword, setConfirmPassword] = useState('123456');
-  const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
 
-  const userSignup = useSelector((state) => state.userSignup);
-  const { loading, error, userInfo } = userSignup;
+  const userSignin = useSelector((state) => state.userSignin);
+  const { loading, error, userInfo } = userSignin;
 
   useEffect(() => {
     if (userInfo) {
@@ -27,27 +24,13 @@ const SignupComponent = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      setMessage('Passwords do not match');
-    } else {
-      dispatch(signup(name, email, password));
-    }
+    dispatch(signin(email, password));
   };
 
   return (
     <Form className='mt-5' onSubmit={submitHandler}>
-      <h2>Sign Up Page</h2>
-      {message && <Message variant='danger'>{message}</Message>}
+      <h2>Sign In Page</h2>
       {error && <Message variant='danger'>{error}</Message>}
-      <Form.Group className='mt-4' controlId='name'>
-        <Form.Label>Full Name</Form.Label>
-        <Form.Control
-          type='text'
-          placeholder='Enter Full Name'
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        ></Form.Control>
-      </Form.Group>
 
       <Form.Group className='mt-4' controlId='email'>
         <Form.Label>Email Address</Form.Label>
@@ -69,21 +52,11 @@ const SignupComponent = () => {
         ></Form.Control>
       </Form.Group>
 
-      <Form.Group controlId='comfirmPassword'>
-        <Form.Label>Confirm Password</Form.Label>
-        <Form.Control
-          type='password'
-          placeholder='Enter password'
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        ></Form.Control>
-      </Form.Group>
-
       <Button type='submit' variant='primary'>
-        Sign Up
+        Sign In
       </Button>
     </Form>
   );
 };
 
-export default SignupComponent;
+export default SigninComponent;
