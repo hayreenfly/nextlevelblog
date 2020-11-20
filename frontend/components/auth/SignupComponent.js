@@ -3,7 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Message from '../Message';
-import { signup } from '../../actions/userActions';
+import { signup, isAuth } from '../../actions/userActions';
 
 const SignupComponent = () => {
   const router = useRouter();
@@ -20,10 +20,8 @@ const SignupComponent = () => {
   const { loading, error, userInfo } = userSignup;
 
   useEffect(() => {
-    if (userInfo) {
-      router.push('/');
-    }
-  }, [userInfo]);
+    isAuth() && router.push('/');
+  }, []);
 
   const submitHandler = (e) => {
     e.preventDefault();

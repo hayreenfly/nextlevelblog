@@ -1,16 +1,20 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { APP_NAME } from '../config';
 import { logout } from '../actions/userActions';
 
 const Header = () => {
+  const router = useRouter();
+
   const dispatch = useDispatch();
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
   const logoutHandler = () => {
     dispatch(logout());
+    router.push('/signin');
   };
   return (
     <div>

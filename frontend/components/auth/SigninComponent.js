@@ -19,7 +19,7 @@ const SigninComponent = () => {
 
   useEffect(() => {
     if (userInfo) {
-      router.push('/');
+      router.push('/home');
     }
   }, [userInfo]);
 
@@ -55,7 +55,7 @@ const SigninComponent = () => {
       </Form.Group>
 
       <Button type='submit' variant='primary'>
-        Sign Up
+        Sign In
       </Button>
     </Form>
   );

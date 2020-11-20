@@ -81,6 +81,16 @@ export const signin = (email, password) => async (dispatch) => {
   }
 };
 
+export const isAuth = () => {
+  const userCheck = localStorage.getItem('userInfo');
+
+  if (userCheck) {
+    return JSON.parse(localStorage.getItem('userInfo'));
+  } else {
+    return false;
+  }
+};
+
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo');
   dispatch({ type: USER_LOGOUT });
