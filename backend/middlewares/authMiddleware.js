@@ -12,7 +12,9 @@ const protect = asyncHandler(async (req, res, next) => {
     try {
       token = req.headers.authorization.split(' ')[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      req.user = await User.findById(decoded.id).select('-password');
+      req.user = await User.findById(decoded.id).select(
+        '-salt -hashed_password'
+      );
       next();
     } catch (error) {
       console.error(error);
@@ -27,4 +29,13 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
-export { protect };
+const admin = (req, res, next) => {
+  if (req.user && req.user.role === 1) {
+    next();
+  } else {
+    res.status(401);
+    throw new Error('Admin resource. Access denied.');
+  }
+};
+
+export { protect, admin };

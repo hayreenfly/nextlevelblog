@@ -71,12 +71,26 @@ const signin = asyncHandler(async (req, res) => {
 });
 
 //**************************************
-// @desc    User Secret Page
-// @route   GET /api/users/secret
+// @desc    GET user profile
+// @route   GET /api/users/profile
 // @access  Private
 //**************************************
-const secretPage = (req, res) => {
-  res.json({ message: 'You have access to the secret page' });
-};
+const getUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
 
-export { signup, signin, secretPage };
+  if (user) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      profile: user.profile,
+      username: user.username,
+      role: user.role,
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
+export { signup, signin, getUserProfile };
