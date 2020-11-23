@@ -33,10 +33,11 @@ const signup = asyncHandler(async (req, res) => {
   if (user) {
     res.status(201).json({
       _id: user._id,
+      username: user.username,
       name: user.name,
       email: user.email,
-      profile: user.profile,
-      username: user.username,
+      role: user.role,
+      token: tokenGenerator(user._id),
     });
     // res.json({ message: 'Signup success! Please signin.' });
   } else {

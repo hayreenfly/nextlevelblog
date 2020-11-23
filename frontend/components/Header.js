@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import Link from 'next/link';
@@ -20,10 +21,7 @@ const Header = () => {
     <div>
       <Navbar bg='primary' variant='dark' expand='lg' collapseOnSelect>
         <Container>
-          <Link
-            href={!userInfo ? '/' : userInfo.role !== 1 ? '/user' : '/admin'}
-            passHref
-          >
+          <Link href='/' passHref>
             <Navbar.Brand>{APP_NAME}</Navbar.Brand>
           </Link>
 
@@ -31,21 +29,30 @@ const Header = () => {
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ml-auto'>
               {userInfo ? (
-                <NavDropdown title={userInfo.name} id='username'>
-                  <Link href='/profile' passHref>
-                    <NavDropdown.Item>Profile</NavDropdown.Item>
-                  </Link>
-                  <NavDropdown.Item onClick={logoutHandler}>
-                    Logout
-                  </NavDropdown.Item>
-                </NavDropdown>
-              ) : (
                 <>
                   <Nav.Item>
-                    <Link href='/signin' passHref>
-                      <Nav.Link>Signin</Nav.Link>
+                    <Link
+                      href={
+                        userInfo && userInfo.role !== 1 ? '/user' : '/admin'
+                      }
+                      passHref
+                    >
+                      <Nav.Link>
+                        <i class='fas fa-laptop-house'></i>
+                      </Nav.Link>
                     </Link>
                   </Nav.Item>
+                  <NavDropdown title={userInfo.name} id='username'>
+                    <Link href='/profile' passHref>
+                      <NavDropdown.Item>Profile</NavDropdown.Item>
+                    </Link>
+                    <NavDropdown.Item onClick={logoutHandler}>
+                      Logout
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </>
+              ) : (
+                <>
                   <Nav.Item>
                     <Link href='/signup' passHref>
                       <Nav.Link>Sign Up</Nav.Link>

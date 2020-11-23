@@ -18,7 +18,6 @@ const SigninComponent = () => {
   const { loading, error, userInfo } = userSignin;
 
   useEffect(() => {
-    console.log(userInfo);
     if (userInfo) {
       if (userInfo.role === 1) {
         router.push('/admin');

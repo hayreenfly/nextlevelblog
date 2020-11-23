@@ -3,13 +3,13 @@ import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Message from '../Message';
-import { signup, isAuth } from '../../actions/userActions';
+import { signup } from '../../actions/userActions';
 
 const SignupComponent = () => {
   const router = useRouter();
 
-  const [name, setName] = useState('New User');
-  const [email, setEmail] = useState('user@localhost.com');
+  const [name, setName] = useState('Dummy Dumdum');
+  const [email, setEmail] = useState('dummy@localhost.com');
   const [password, setPassword] = useState('123456');
   const [confirmPassword, setConfirmPassword] = useState('123456');
   const [message, setMessage] = useState(null);
@@ -20,16 +20,18 @@ const SignupComponent = () => {
   const { loading, error, userInfo } = userSignup;
 
   useEffect(() => {
-    isAuth() && router.push('/');
-  }, []);
+    if (userInfo) {
+      if (userInfo.role === 1) {
+        router.push('/admin');
+      } else {
+        router.push('/user');
+      }
+    }
+  }, [userInfo]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      setMessage('Passwords do not match');
-    } else {
-      dispatch(signup(name, email, password));
-    }
+    dispatch(signup(name, email, password));
   };
 
   return (
@@ -37,7 +39,8 @@ const SignupComponent = () => {
       <h2>Sign Up Page</h2>
       {message && <Message variant='danger'>{message}</Message>}
       {error && <Message variant='danger'>{error}</Message>}
-      <Form.Group className='mt-4' controlId='name'>
+
+      <Form.Group className='mt-4' controlId='email'>
         <Form.Label>Full Name</Form.Label>
         <Form.Control
           type='text'
@@ -67,11 +70,11 @@ const SignupComponent = () => {
         ></Form.Control>
       </Form.Group>
 
-      <Form.Group controlId='comfirmPassword'>
+      <Form.Group controlId='confirmPassword'>
         <Form.Label>Confirm Password</Form.Label>
         <Form.Control
           type='password'
-          placeholder='Enter password'
+          placeholder='Enter confirm password'
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
         ></Form.Control>
